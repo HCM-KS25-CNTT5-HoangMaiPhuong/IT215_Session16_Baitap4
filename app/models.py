@@ -11,6 +11,7 @@ class Student(Base):
     status = Column(String(50), nullable=False, default="ACTIVE")  # ACTIVE / INACTIVE
 
     enrollments = relationship("Enrollment", back_populates="student")
+    courses = relationship("Course", secondary="enrollments", back_populates="students")
 
 class Course(Base):
     __tablename__ = "courses"
@@ -20,6 +21,7 @@ class Course(Base):
     status = Column(String(50), nullable=False, default="OPEN")  # OPEN / CLOSED
 
     enrollments = relationship("Enrollment", back_populates="course")
+    students = relationship("Student", secondary="enrollments", back_populates="courses")
 
 class Enrollment(Base):
     __tablename__ = "enrollments"
